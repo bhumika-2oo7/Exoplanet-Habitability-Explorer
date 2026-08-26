@@ -41,13 +41,6 @@ terminal output.
    ```
    Your browser should open automatically to the app.
 
-## Deploying it live (optional, but great for your Stardance devlog!)
-
-1. Push this folder to a public GitHub repository.
-2. Go to [share.streamlit.io](https://share.streamlit.io), sign in with
-   GitHub, and point it at your repo's `app.py`.
-3. You'll get a free public link anyone can open — perfect to post in
-   your devlogs.
 
 ## What I learned
 
