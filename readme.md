@@ -1,59 +1,119 @@
 # 🪐 Exoplanet Habitability Explorer
 
-An AI/Machine Learning web app built.
+A small machine learning project where I used real exoplanet data from NASA to explore whether a planet could be considered a possible habitability candidate.
 
-## What it does
+## What is this project?
 
-- Downloads real data on thousands of confirmed exoplanets from **NASA's
-  Exoplanet Archive**.
-- Defines a simplified "habitable-zone candidate" rule based on real
-  astrophysics: Earth-like temperature + roughly Earth-sized.
-- Trains and compares **two machine learning models** (Logistic
-  Regression and Random Forest) to predict this from a star's
-  temperature, radius, mass, and the planet's orbital period —
-  *without* letting the model see the exact numbers used to build the
-  label, to avoid "cheating."
-- Picks the better-performing model and saves it.
-- Serves it through an interactive **Streamlit web app** where anyone
-  can describe a star system and get a live prediction.
+I wanted to try building an ML project using a real scientific dataset instead of a small sample dataset.
 
-## Why I made this
+For this project, I used data from the **NASA Exoplanet Archive** and created my own simple rule for identifying possible habitable-zone candidates.
 
-I wanted to go further: use a bigger real dataset, compare
-multiple models properly, handle imbalanced data the right way, and
-ship something people can actually click around in — not just read
-terminal output.
+The project then:
 
-## How to run it
+* Downloads exoplanet data from NASA's Exoplanet Archive.
+* Cleans the dataset and selects the features needed for the model.
+* Creates a simple target label based on approximate Earth-like conditions.
+* Trains two models: **Logistic Regression** and **Random Forest**.
+* Compares their performance using the **F1 score**.
+* Saves the better-performing model.
+* Uses the trained model to make predictions for new inputs.
 
-1. Install Python 3.
-2. In this folder, install the requirements:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Train the model (this downloads NASA data and takes a minute):
-   ```
-   python train_model.py
-   ```
-4. Launch the web app:
-   ```
-   streamlit run app.py
-   ```
-   Your browser should open automatically to the app.
+## Why I made it
 
+I wanted to understand what a complete ML project looks like when working with real-world data.
+
+I also wanted to learn about some things that I had not worked with much before, such as:
+
+* Getting data from a public API.
+* Cleaning real datasets.
+* Creating a target variable when the dataset doesn't directly provide one.
+* Dealing with an imbalanced dataset.
+* Comparing different ML models.
+* Connecting a trained model to a web interface.
+
+This project is mainly a learning project, so the habitability rule I use is **simplified** and should not be treated as an actual scientific method for determining whether an exoplanet can support life.
+
+## How the ML part works
+
+I used information such as:
+
+* Star temperature
+* Star radius
+* Star mass
+* Planet orbital period
+
+I used these features to train the models.
+
+The target label is created separately using my simplified habitability conditions. I did not include the exact values used to create that label as model features, because that would make the prediction artificially easy.
+
+I tested both Logistic Regression and Random Forest and compared their F1 scores before choosing the model used by the application.
+
+## Running the project locally
+
+### 1. Install the requirements
+
+Make sure Python 3 is installed, then run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Train the model
+
+Run:
+
+```bash
+python train_model.py
+```
+
+This downloads the NASA dataset, prepares the data, trains the models and saves the selected model.
+
+### 3. Start the application
+
+Run:
+
+```bash
+streamlit run app.py
+```
+
+The application will open in your browser.
 
 ## What I learned
 
-- How to pull large real datasets from a public science API
-- How to engineer a label myself when no "answer key" exists
-- Why using the same data to create a label AND train on it can "leak"
-  the answer and produce fake-looking results
-- How to compare multiple ML models fairly using F1 score, not just
-  accuracy, especially with imbalanced data
-- How to turn a Python script into an interactive web app with Streamlit
+This project helped me understand that building an ML project is more than just training a model.
+
+I learned how to:
+
+* Work with a real dataset instead of a prepared tutorial dataset.
+* Get data from NASA's public API.
+* Clean and select useful columns from a large dataset.
+* Create labels from conditions I defined.
+* Think about data leakage.
+* Use F1 score when accuracy isn't enough.
+* Compare different ML models.
+* Save and load a trained model.
+* Connect a machine learning model to a simple web interface.
 
 ## Data source
 
-[NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) —
-Planetary Systems Composite Parameters (PSCompPars) table, accessed via
-their free public TAP API (no key required).
+**NASA Exoplanet Archive**
+
+I used the Planetary Systems Composite Parameters (PSCompPars) table through NASA's public TAP API.
+
+https://exoplanetarchive.ipac.caltech.edu/
+
+## Project structure
+
+```text
+Exoplanet-Habitability-Explorer/
+│
+├── app.py
+├── train_model.py
+├── requirements.txt
+├── README.md
+└── ...
+```
+
+## Note
+
+This project is an educational ML experiment. The definition of "habitable" used here is intentionally simplified and does not represent the full scientific process used by astronomers to evaluate exoplanet habitability.
