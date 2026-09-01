@@ -1,21 +1,14 @@
 """
 EXOPLANET HABITABILITY EXPLORER — Part 1: Train the Model
 --------------------------------------------------------------
-A bigger AI project.
+The app takes in four parameters about a star system:
 
-WHAT THIS PROGRAM DOES :
-1. Downloads real data on THOUSANDS of exoplanets from NASA's Exoplanet
-   Archive (no API key needed for this one — it's totally open!).
-2. Nobody has officially labeled which of these planets are "habitable" —
-   that's still a real science mystery! So instead, I decide on a
-   sensible rule based on real astrophysics: a planet is a "habitable
-   zone candidate" if its temperature is Earth-like AND it's roughly
-   Earth-sized (not a giant gas ball like Jupiter).
-3. We then hide that rule from the model, and only show it facts about
-   the STAR the planet orbits (how hot it is, how big, how heavy) plus
-   the planet's orbit length. Can the model learn to guess which stars
-   tend to host comfy planets, just from the star's own properties?
-4. We train TWO different kinds of models and compare them.
+Star temperature (K)
+Star radius (relative to the Sun)
+Star mass (relative to the Sun)
+Planet's orbital period (days)
+And returns a binary prediction and probability of being in a habitable zone based on the output of a Random Forest model trained on real exoplanets.
+A bigger AI project.
 """
 
 import pandas as pd
@@ -27,8 +20,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, classification_report
 import joblib
 
-
-print(" Downloading exoplanet data from NASA (this can take a minute)...")
 
 TAP_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
 query = (
@@ -64,7 +55,6 @@ print("Label balance in this final dataset:")
 print(y.value_counts(), "\n")
 
 
-#  Split into training data and a fair, balanced test quiz
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
@@ -75,7 +65,6 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 
-# Train TWO different models and compare them
 
 models = {
     "Logistic Regression": LogisticRegression(class_weight="balanced", max_iter=1000),
@@ -101,4 +90,4 @@ print(f" Winner: {best_name} (F1 = {results[best_name]['f1']:.2f})")
 joblib.dump(best_model, "habitability_model.joblib")
 joblib.dump(scaler, "habitability_scaler.joblib")
 print("\n Saved the trained model and scaler to disk.")
-print("   Now run the web app with: streamlit run app.py")
+print("   Now run the web app with")
