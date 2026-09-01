@@ -1,9 +1,5 @@
 """
 EXOPLANET HABITABILITY EXPLORER — Part 2: The Web App
-------------------------------------------------------------
-This is what people actually SEE and CLICK on. Streamlit turns plain
-Python into a website — no HTML/CSS/JavaScript needed!
-
 """
 
 import streamlit as st
